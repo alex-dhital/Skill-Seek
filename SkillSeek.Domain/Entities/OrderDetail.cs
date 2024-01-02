@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using SkillSeek.Domain.Base;
 
 namespace SkillSeek.Domain.Entities;
 
-public class OrderDetail
+public class OrderDetail : BaseEntity<Guid>
 {
     public Guid OrderId { get; set; }
     
