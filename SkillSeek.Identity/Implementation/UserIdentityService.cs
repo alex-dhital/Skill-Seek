@@ -4,6 +4,7 @@ using SkillSeek.Application.Interfaces.Identity;
 using SkillSeek.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using SkillSeek.Application.Interfaces.Repositories.Base;
 
 namespace SkillSeek.Identity.Implementation;
 
@@ -11,13 +12,30 @@ public class UserIdentityService : IUserIdentityService
 {
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
-
-    public UserIdentityService(UserManager<User> userManager, SignInManager<User> signInManager)
+    private readonly IGenericRepository _genericRepository;
+    
+    public UserIdentityService(UserManager<User> userManager, SignInManager<User> signInManager, IGenericRepository genericRepository)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _genericRepository = genericRepository;
     }
 
+    public UserDto GetUserById(Guid userId)
+    {
+        var user = _genericRepository.GetById<User>(userId);
+
+        return new UserDto()
+        {
+            Id = user.Id,
+            FullName = user.Name,
+            Address = user.Address,
+            State = user.State,
+            ImageURL = user.ImageURL,
+            PhoneNumber = user.PhoneNumber ?? ""
+        };
+    }
+    
     public async Task<Tuple<string, string>> Register(RegisterDto register, string? returnUrl = null)
     {
         try

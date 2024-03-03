@@ -8,7 +8,7 @@ public class Professional : BaseEntity<Guid>
 {
     public Guid UserId { get; set; }
     
-    public decimal PayableAmount { get; set; }
+    public decimal? PayableAmount { get; set; }
     
     public string CertificationURL { get; set; }
     

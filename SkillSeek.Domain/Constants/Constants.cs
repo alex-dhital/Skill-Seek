@@ -49,4 +49,16 @@ public abstract class Constants
         public const string Pending = "Pending";
         public const string Approved = "Approved";
     }
+
+    public abstract class FilePath
+    {
+        public static string UsersImagesPath => @"wwwroot\images\users\";
+
+        public static string ProfessionalsDocumentsPath => @"wwwroot\documents\";
+
+        public static string ProfessionalsImagesPath => @"wwwroot\images\professionals\";
+
+        public static string ProductsImagesPath => @"wwwroot\images\professionals\";
+
+    }
 }

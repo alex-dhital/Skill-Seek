@@ -10,6 +10,12 @@ public class Product : BaseEntity<Guid>
     public string Description { get; set; }
     
     public decimal Price { get; set; }
+
+    public decimal Price25 { get; set; }
+    
+    public decimal Price50 { get; set; }
+    
+    public string ImageURL { get; set; }
     
     public Guid ServiceId { get; set; }
     

@@ -556,6 +556,10 @@ namespace SkillSeek.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -569,6 +573,12 @@ namespace SkillSeek.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Price25")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Price50")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("ServiceId")
@@ -625,7 +635,7 @@ namespace SkillSeek.Infrastructure.Migrations
                     b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("PayableAmount")
+                    b.Property<decimal?>("PayableAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ResumeURL")

@@ -105,6 +105,9 @@ namespace SkillSeek.Infrastructure.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price25 = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price50 = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ServiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -223,7 +226,7 @@ namespace SkillSeek.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PayableAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PayableAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     CertificationURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ResumeURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActionComplete = table.Column<bool>(type: "bit", nullable: false),

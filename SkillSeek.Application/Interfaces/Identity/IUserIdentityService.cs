@@ -4,6 +4,8 @@ namespace SkillSeek.Application.Interfaces.Identity;
 
 public interface IUserIdentityService
 {
+    UserDto GetUserById(Guid userId);
+
     Task<Tuple<string, string>> Register(RegisterDto register, string? returnUrl = null);
 
     Task<bool> ConfirmEmail(Guid userId, string code);

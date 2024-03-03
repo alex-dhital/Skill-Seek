@@ -12,7 +12,7 @@ using SkillSeek.Infrastructure.Persistence;
 namespace SkillSeek.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240101154034_DbSetup")]
+    [Migration("20240303012459_DbSetup")]
     partial class DbSetup
     {
         /// <inheritdoc />
@@ -559,6 +559,10 @@ namespace SkillSeek.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -572,6 +576,12 @@ namespace SkillSeek.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Price25")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Price50")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("ServiceId")
@@ -628,7 +638,7 @@ namespace SkillSeek.Infrastructure.Migrations
                     b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("PayableAmount")
+                    b.Property<decimal?>("PayableAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ResumeURL")

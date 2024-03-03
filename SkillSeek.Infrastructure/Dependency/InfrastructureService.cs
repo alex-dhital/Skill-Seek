@@ -2,7 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SkillSeek.Application.Interfaces.Services;
 using SkillSeek.Infrastructure.Implementation.Repository.Base;
+using SkillSeek.Infrastructure.Implementation.Services;
 using SkillSeek.Infrastructure.Persistence;
 using SkillSeek.Infrastructure.Persistence.Seed;
 
@@ -21,6 +23,11 @@ public static class InfrastructureService
         services.AddScoped<IDbInitializer, DbInitializer>();
 
         services.AddTransient<IGenericRepository, GenericRepository>();
+
+        services.AddTransient<IFileUploadService, FileUploadService>();
+        services.AddTransient<IProductService, ProductService>();
+        services.AddTransient<IProfessionalService, ProfessionalService>();
+        services.AddTransient<IServiceService, ServiceService>();
 
         return services;
     }
