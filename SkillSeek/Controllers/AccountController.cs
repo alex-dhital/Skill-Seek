@@ -18,6 +18,13 @@ public class AccountController : Controller
         _userIdentityService = userIdentityService;
         _emailSender = emailSender;
     }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public async Task<IActionResult> Registration()
+    {
+        return await Task.FromResult<IActionResult>(View());
+    }
     
     [HttpGet]
     [AllowAnonymous]

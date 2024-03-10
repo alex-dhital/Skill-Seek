@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace SkillSeek.Application.DTOs.Identity;
 
-public class RegisterDto
+public class RegistrationDto
 {
     [Required]
     [Display(Name = "Name")]
@@ -15,7 +15,7 @@ public class RegisterDto
     public string Email { get; set; }
     
     [Required]
-    [Display(Name = "PhoneNumber")]
+    [Display(Name = "Phone Number")]
     public string PhoneNumber { get; set; }
     
     [Required]
@@ -32,9 +32,21 @@ public class RegisterDto
     [Display(Name = "Confirm Password")]
     [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
     public string ConfirmPassword { get; set; }
-
+ 
+    [Required]
+    [Display(Name = "Service")]
+    public int ServiceId { get; set; }
+    
     [Display(Name = "Profile Image")]
     public IFormFile? ProfileImage { get; set; }
+
+    [Required]
+    [Display(Name = "Resume")]
+    public IFormFile Resume { get; set; }
+    
+    [Required]
+    [Display(Name = "Certification")]
+    public IFormFile Certification { get; set; }
     
     [Display(Name = "Role")]
     public string Role { get; set; }

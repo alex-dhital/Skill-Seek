@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Client;
+using SkillSeek.Application.Interfaces.Services;
 using SkillSeek.Identity.Implementation;
 
 namespace SkillSeek.Identity.Dependency;
@@ -33,6 +34,7 @@ public static class IdentityService
         services.AddAuthentication();
 
         services.AddTransient<IUserIdentityService, UserIdentityService>();
+        services.AddTransient<IEmailService, EmailService>();
         
         return services;
     }

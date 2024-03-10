@@ -1,6 +1,6 @@
 using System.Diagnostics;
-using SkillSeek.Models;
 using Microsoft.AspNetCore.Mvc;
+using SkillSeek.Application.DTOs.Error;
 
 namespace SkillSeek.Controllers;
 
@@ -15,7 +15,7 @@ public class HomeController(ILogger<HomeController> logger) : Controller
     {
         return View();
     }
-
+    
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

@@ -17,4 +17,16 @@
       <ProjectReference Include="..\SkillSeek.Infrastructure\SkillSeek.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Update="appsettings.Development.json">
+        <DependentUpon>appsettings.json</DependentUpon>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\Professional\Approvals.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Professional\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Service\Index.cshtml" />
+    </ItemGroup>
+
 </Project>

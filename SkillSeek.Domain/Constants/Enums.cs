@@ -1,8 +1,8 @@
 ﻿namespace SkillSeek.Domain.Constants;
 
-public enum Enums
+public enum Roles
 {
     Admin = 1,
-    Futsal = 2,
-    Player = 3
+    Customer = 2,
+    Professional = 3
 }

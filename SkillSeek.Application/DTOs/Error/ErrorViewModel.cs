@@ -1,4 +1,4 @@
-namespace SkillSeek.Models;
+namespace SkillSeek.Application.DTOs.Error;
 
 public class ErrorViewModel
 {

@@ -23,18 +23,18 @@ services.AddSession(options =>
 
 services.ConfigureApplicationCookie(options =>
 {
-    options.LogoutPath = $"/User/Account/Logout";
-    options.LoginPath = $"/User/Account/Login";
-    options.AccessDeniedPath = $"/User/Account/AccessDenied";
+    options.LogoutPath = "/Account/Logout";
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/AccessDenied";
 });
+
+services.AddRazorPages();
 
 var app = builder.Build();
 
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/User/Home/Error");
-    app.UseHsts();
-}
+// app.UseExceptionHandler("/Home/Error");
+
+app.UseHsts();
 
 app.UseHttpsRedirection();
 
@@ -52,7 +52,7 @@ app.MapControllers();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{area=User}/{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 using (var scope = app.Services.CreateScope())
 {

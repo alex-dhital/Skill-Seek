@@ -28,7 +28,7 @@ public class EmailService : IEmailService
                 "From",
                 new JObject {
                     { "Email", "skillseek@mail.com"},
-                    { "Name", "Futsal Fusion"}
+                    { "Name", "Skill Seek"}
                 }
             }, 
             {

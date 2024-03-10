@@ -5,6 +5,8 @@ using SkillSeek.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using SkillSeek.Application.Interfaces.Repositories.Base;
+using SkillSeek.Application.Interfaces.Services;
+using SkillSeek.Domain.Constants;
 
 namespace SkillSeek.Identity.Implementation;
 
@@ -13,12 +15,17 @@ public class UserIdentityService : IUserIdentityService
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
     private readonly IGenericRepository _genericRepository;
+    private readonly IFileUploadService _fileUploadService;
     
-    public UserIdentityService(UserManager<User> userManager, SignInManager<User> signInManager, IGenericRepository genericRepository)
+    public UserIdentityService(UserManager<User> userManager, 
+        SignInManager<User> signInManager, 
+        IGenericRepository genericRepository, 
+        IFileUploadService fileUploadService)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _genericRepository = genericRepository;
+        _fileUploadService = fileUploadService;
     }
 
     public UserDto GetUserById(Guid userId)
@@ -40,18 +47,24 @@ public class UserIdentityService : IUserIdentityService
     {
         try
         {
+            var usersImagePath = DocumentsPath.UsersImagesPath;
+            
+            var imagePath = register.ProfileImage != null ? _fileUploadService.UploadFile(register.ProfileImage, usersImagePath) : null;
+            
             var user = new User()
             {
                 Name = register.Name,
                 UserName = register.Email, 
-                Email = register.Email 
+                Email = register.Email,
+                State = register.State,
+                ImageURL = imagePath
             };
             
             var result = await _userManager.CreateAsync(user, register.Password);
 
             if (!result.Succeeded) return new Tuple<string, string>(string.Empty, string.Empty);
             
-            await _userManager.AddToRoleAsync(user, register.Role);
+            await _userManager.AddToRoleAsync(user, Constants.Roles.Customer);
 
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 
