@@ -4,7 +4,6 @@ using ServiceAppointmentSystem.Data;
 using ServiceAppointmentSystem.Repositories;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using ServiceAppointmentSystem.Repositories.Interfaces;
-using IEmailSender = ServiceAppointmentSystem.Repositories.IEmailSender;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,5 +1,6 @@
 ﻿using System.Net.Mail;
 using System.Net;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace ServiceAppointmentSystem.Repositories
 {
@@ -12,9 +13,9 @@ namespace ServiceAppointmentSystem.Repositories
 
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            string fromMail = "sarthakprd08@gmail.com";
+            string fromMail = "alexdhital120@gmail.com";
 
-            string fromPassword = "pdmbzacgnxdifhya";
+            string fromPassword = "awcqnyeyhmuehyen";
 
             MailMessage message = new MailMessage();
             message.From = new MailAddress(fromMail);
@@ -34,8 +35,8 @@ namespace ServiceAppointmentSystem.Repositories
 		}
     }
 
-    public interface IEmailSender
-    {
-        Task SendEmailAsync(string email, string subject, string htmlMessage);
-    }
+    // public interface IEmailSender
+    // {
+    //     Task SendEmailAsync(string email, string subject, string htmlMessage);
+    // }
 }
