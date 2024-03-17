@@ -1,120 +1,122 @@
-﻿@using SkillSeek.Domain.Entities.Identity
-@using Microsoft.AspNetCore.Identity
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using SkillSeek.Domain.Constants
+﻿@using Microsoft.AspNetCore.Identity;
+@using ServiceAppointmentSystem.Models.Constants;
 
-@inject SignInManager<User> SignInManager
+@inject SignInManager<IdentityUser> SignInManager
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - Skill Seek</title>
-    
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="shortcut icon" href="~/favicon.png" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true"/>
-    
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"]</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="shortcut icon" href="~/favicon.png" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/SkillSeek.styles.css" asp-append-version="true" />
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-<header>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Skill Seek</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarColor02">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    @if (SignInManager.IsSignedIn(User))
-                    {
-                        if (User.IsInRole(Constants.Roles.Admin))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-controller="Service" asp-action="Index">Services</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-controller="Product" asp-action="Index">Products</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-controller="Order" asp-action="Index">Orders</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Professionals</a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" asp-controller="Professional" asp-action="Index">List of Professionals</a>
-                                    <a class="dropdown-item" asp-controller="Professional" asp-action="Approvals">Approvals</a>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Appointments</a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" asp-controller="Appointment" asp-action="Booking">Booking</a>
-                                    <a class="dropdown-item" asp-controller="Appointment" asp-action="History">History</a>
-                                </div>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Appointment</a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" asp-controller="Appointment" asp-action="Index">History</a>
-                                    <a class="dropdown-item" asp-controller="Appointment" asp-action="Booked">Booking</a>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-controller="Product" asp-action="Order">Products</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Cart" asp-action="Index">
-                                    <i class="fa fa-shopping-cart"></i>
-                                </a>
-                            </li>
-                        }
-                    }
-                    else
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-controller="Account" asp-action="Registration">Become a Professional</a>
-                        </li>
-                    }
-                </ul>
-                <partial name="_Authentication"/>
-            </div>
-        </div>
-    </nav>
-</header>
-<div class="container">
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
-</div>
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container">
+				<a class="navbar-brand" asp-area="User" asp-controller="Home" asp-action="Home">Service Appointment</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarColor02">
+					<ul class="navbar-nav me-auto">
+						@if (SignInManager.IsSignedIn(User))
+						{
+							@if (User.IsInRole(Constants.Admin))
+							{
+								<li class="nav-item">
+									<a class="nav-link text-white" asp-area="User" asp-controller="Home" asp-action="Home">Home</a>
+								</li>	
+								<li class="nav-item">
+									<a class="nav-link text-white" asp-area="Admin" asp-controller="Service" asp-action="Index">Services</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-white" asp-area="Admin" asp-controller="Item" asp-action="Index">Items</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-white" asp-area="Admin" asp-controller="Order" asp-action="Index">Orders</a>
+								</li>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Professionals</a>
+									<div class="dropdown-menu">
+										<a class="dropdown-item" asp-area="Admin" asp-controller="Professional" asp-action="Index">List of Professionals</a>
+										<a class="dropdown-item" asp-area="Admin" asp-controller="Professional" asp-action="Professionals">Approvals</a>
+									</div>
+								</li>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Appointments</a>
+									<div class="dropdown-menu">
+										<a class="dropdown-item" asp-area="Admin" asp-controller="Appointment" asp-action="Booking">Booking</a>
+										<a class="dropdown-item" asp-area="Admin" asp-controller="Appointment" asp-action="History">History</a>
+									</div>
+								</li>
+							}
+							@if (User.IsInRole(Constants.User))
+							{
+								<li class="nav-item">
+									<a class="nav-link text-white" asp-area="User" asp-controller="Home" asp-action="Home">Home</a>
+								</li>	
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Appointment</a>
+									<div class="dropdown-menu">
+										<a class="dropdown-item" asp-area="User" asp-controller="Appointment" asp-action="Index">History</a>
+										<a class="dropdown-item" asp-area="User" asp-controller="Appointment" asp-action="Booked">Booking</a>
+									</div>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-white" asp-area="User" asp-controller="Home" asp-action="Items">Items</a>
+								</li>	
+								<li class="nav-item">
+									<a class="nav-link" asp-area="User" asp-controller="Cart" asp-action="Index">
+										<i class="fa fa-shopping-cart"></i>
+									</a>
+								</li>	
+							}
+						}
+						else
+						{
+							<li class="nav-item">
+								<a class="nav-link text-white" asp-area="User" asp-controller="Home" asp-action="Home">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Registrations">Become a Professional</a>
+							</li>
+						}
+					</ul>
+					<partial name="_LoginPartial" />
+				</div>
+			  </div>
+			</nav>
+	</header>
+	<div class="container">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
 
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2023 - Skill Seek - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-    </div>
-</footer>
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://kit.fontawesome.com/1c1a57d0d0.js"></script>
-<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script src="https://cdn.tiny.cloud/1/gt87d8xmi9qqycaz7hv57wuyzd7nlsjusj1zcf8hu8hyve0q/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-
-@await RenderSectionAsync("Scripts", required: false)
-
+	<footer class="border-top footer text-muted">
+		<div class="container text-center">
+			&copy; 2023 - Service Appointment System
+		</div>
+	</footer>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://kit.fontawesome.com/1c1a57d0d0.js"></script>
+	<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<script src="https://cdn.tiny.cloud/1/gt87d8xmi9qqycaz7hv57wuyzd7nlsjusj1zcf8hu8hyve0q/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+<style>
+
+</style>

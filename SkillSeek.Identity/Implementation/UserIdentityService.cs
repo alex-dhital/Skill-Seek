@@ -4,8 +4,8 @@ using SkillSeek.Application.Interfaces.Identity;
 using SkillSeek.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
-using SkillSeek.Application.Interfaces.Repositories.Base;
-using SkillSeek.Application.Interfaces.Services;
+using ServiceAppointmentSystem.Models.Constants;
+using SkillSeek.Application.Interfaces;
 using SkillSeek.Domain.Constants;
 
 namespace SkillSeek.Identity.Implementation;
@@ -14,33 +14,19 @@ public class UserIdentityService : IUserIdentityService
 {
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
-    private readonly IGenericRepository _genericRepository;
     private readonly IFileUploadService _fileUploadService;
     
     public UserIdentityService(UserManager<User> userManager, 
-        SignInManager<User> signInManager, 
-        IGenericRepository genericRepository, 
-        IFileUploadService fileUploadService)
+        SignInManager<User> signInManager, IFileUploadService fileUploadService)
     {
         _userManager = userManager;
         _signInManager = signInManager;
-        _genericRepository = genericRepository;
         _fileUploadService = fileUploadService;
     }
 
     public UserDto GetUserById(Guid userId)
     {
-        var user = _genericRepository.GetById<User>(userId);
-
-        return new UserDto()
-        {
-            Id = user.Id,
-            FullName = user.Name,
-            Address = user.Address,
-            State = user.State,
-            ImageURL = user.ImageURL,
-            PhoneNumber = user.PhoneNumber ?? ""
-        };
+        return new UserDto(); 
     }
     
     public async Task<Tuple<string, string>> Register(RegisterDto register, string? returnUrl = null)
@@ -64,7 +50,7 @@ public class UserIdentityService : IUserIdentityService
 
             if (!result.Succeeded) return new Tuple<string, string>(string.Empty, string.Empty);
             
-            await _userManager.AddToRoleAsync(user, Constants.Roles.Customer);
+            await _userManager.AddToRoleAsync(user, Constants.User);
 
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 

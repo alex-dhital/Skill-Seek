@@ -2,4 +2,7 @@
 
 namespace SkillSeek.Domain.Entities.Identity;
 
-public class UserLogin : IdentityUserLogin<Guid>;
+public class UserLogin : IdentityUserLogin<Guid>
+{
+    
+}

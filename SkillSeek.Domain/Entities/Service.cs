@@ -1,12 +1,18 @@
-﻿using SkillSeek.Domain.Base;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace SkillSeek.Domain.Entities;
-
-public class Service : BaseEntity<Guid>
+namespace ServiceAppointmentSystem.Models.Entities
 {
-    public string Title { get; set; }
-    
-    public string Description { get; set; }
-    
-    public decimal BasePrice { get; set; }
+    public class Service
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public string Role { get; set; }
+
+        [Display(Name = "Base Price")]
+        public double BasePrice { get; set; }
+    }
 }

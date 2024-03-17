@@ -1,40 +1,49 @@
-using SkillSeek.Identity.Dependency;
-using SkillSeek.Infrastructure.Dependency;
-using SkillSeek.Infrastructure.Persistence.Seed;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using ServiceAppointmentSystem.Data;
+using ServiceAppointmentSystem.Repositories;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using ServiceAppointmentSystem.Repositories.Interfaces;
+using IEmailSender = ServiceAppointmentSystem.Repositories.IEmailSender;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
 
-var configuration = builder.Configuration;
+var configurations = builder.Configuration;
 
-services.AddInfrastructureService(configuration);
+var connectionString = configurations.GetConnectionString("DefaultConnection");
 
-services.AddIdentityService(configuration);
+services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+
+services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+services.AddTransient<IEmailSender, EmailSender>();
+
+services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+services.AddScoped<IDbInitializer, DbInitializer>();
 
 services.AddControllersWithViews();
 
-services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(100);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
+services.AddRazorPages();
 
 services.ConfigureApplicationCookie(options =>
 {
-    options.LogoutPath = "/Account/Logout";
-    options.LoginPath = "/Account/Login";
-    options.AccessDeniedPath = "/Account/AccessDenied";
+    options.LogoutPath = $"/Identity/Account/Logout";
+    options.LoginPath = $"/Identity/Account/Login";
+    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
 });
-
-services.AddRazorPages();
 
 var app = builder.Build();
 
-// app.UseExceptionHandler("/Home/Error");
-
-app.UseHsts();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
 
 app.UseHttpsRedirection();
 
@@ -42,23 +51,25 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();
+app.MapRazorPages();
+
+app.UseAuthentication();;
 
 app.UseAuthorization();
 
-app.MapRazorPages();
-
-app.MapControllers();
-
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{Area=User}/{controller=Home}/{action=Home}/{id?}");
 
-using (var scope = app.Services.CreateScope())
-{
-    var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-
-    dbInitializer.Initialize();
-}
+SeedDatabase();
 
 app.Run();
+
+void SeedDatabase()
+{
+    using var scope = app.Services.CreateScope();
+    
+    var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+    
+    dbInitializer.Initialize();
+}

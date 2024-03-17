@@ -1,36 +1,42 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using SkillSeek.Domain.Base;
-using SkillSeek.Domain.Entities.Identity;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SkillSeek.Domain.Entities;
-
-public class Appointment : BaseEntity<Guid>
+namespace ServiceAppointmentSystem.Models.Entities
 {
-    public Guid UserId { get; set; }
-    
-    public Guid? ProfessionalId { get; set; }
-    
-    public string RequestDescription { get; set; }
-    
-    public DateTime BookedDate { get; set; } = DateTime.Now;
+    public class Appointment
+    {
+        [Key]
+        public int Id { get; set; }
 
-    public DateTime AppointedDate { get; set; }
+        public string UserId { get; set; }
 
-    public DateTime? FinalizedDate { get; set;}
+        public int ServiceId { get; set; }
 
-    public string? AdminRemarks { get; set; }
+        public Guid? ProfessionalId { get; set; } = null;
 
-    public string? ProfessionalRemarks { get; set; }
-    
-    public string? FeedbackDescription { get; set; }
+        public string Request { get; set; }
 
-    public string ActionStatus { get; set; }
+        public DateTime BookedDate { get; set; } = DateTime.Now;
 
-    public string PaymentStatus { get; set; }
+        public DateTime AppointmentDate { get; set; }
 
-    [ForeignKey("UserId")]
-    public virtual User? User { get; set; }
+        public DateTime? FinalizedDate { get; set;}
 
-    [ForeignKey("ProfessionalId")]
-    public virtual Professional? Professional { get; set; }
+        public string? AdminRemarks { get; set; }
+
+        public string? ProfessionalRemarks { get; set; } = "";
+
+        public string ActionStatus { get; set; } = Constants.Constants.Booked;
+
+        public string PaymentStatus { get; set; } = Constants.Constants.Pending;
+
+        [ForeignKey("UserId")]
+        public virtual AppUser? AppUser { get; set; }
+
+        [ForeignKey("ProfessionalId")]
+        public virtual Professional? Professional { get; set; }
+
+        [ForeignKey("ServiceId")]
+        public virtual Service? Service { get; set; }
+    }
 }

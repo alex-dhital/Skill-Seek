@@ -1,64 +1,29 @@
-﻿namespace SkillSeek.Domain.Constants;
-
-public abstract class Constants
+﻿namespace ServiceAppointmentSystem.Models.Constants
 {
-    public abstract class Roles
+    public class Constants
     {
+        public const string User = "User";
         public const string Admin = "Admin";
-        public const string Professional = "Professional";
-        public const string Customer = "Customer";
-    }
+        public const string Employee = "Employee";
 
-    public abstract class Passwords
-    {
-        public const string Password = "radi0V!oleta";
-    }
-    
-    public abstract class Entity
-    {
-        public const string System = "System";
-        public const string Admin = "Admin";
-        public const string Professional = "Professional";
-        public const string Customer = "Customer";
-    }
-    
-    public abstract class Order
-    {
-        public const string Pending = "Pending";
-        public const string Approved = "Approved";
-        public const string Processing = "Processing";
-        public const string Completed = "Completed";
-        public const string Cancelled = "Cancelled";
-        public const string Shipped = "Shipped";
-    }
-    
-    public abstract class Payment
-    {
-        public const string Pending = "Pending";
-        public const string Refunded = "Refunded";
-        public const string Cancelled = "Cancelled";
-        public const string Approved = "Approved";
-        public const string Delayed = "Delayed";
-        public const string Rejected = "Rejected";
-    }
-    
-    public abstract class Appointment
-    {
+        public const string StatusPending = "Pending";
+        public const string StatusApproved = "Approved";
+        public const string StatusProcessing = "Processing";
+        public const string StatusCompleted = "Completed";
+        public const string StatusCancelled = "Cancelled";
+        public const string StatusShipped = "Shipped";
+
+		public const string PaymentPending = "Pending";
+		public const string PaymentRefunded = "Refunded";
+		public const string PaymentCancelled = "Cancelled";
+		public const string PaymentApproved = "Approved";
+        public const string PaymentDelayed = "Delayed";
+        public const string PaymentRejected = "Rejected";
+
         public const string Booked = "Booked";
         public const string Completed = "Completed";
+
         public const string Pending = "Pending";
         public const string Approved = "Approved";
-    }
-
-    public abstract class FilePath
-    {
-        public static string UsersImagesPath => @"wwwroot\images\users\";
-
-        public static string ProfessionalsDocumentsPath => @"wwwroot\documents\";
-
-        public static string ProfessionalsImagesPath => @"wwwroot\images\professionals\";
-
-        public static string ProductsImagesPath => @"wwwroot\images\professionals\";
-
     }
 }
